@@ -2,13 +2,11 @@ import tkinter as tk
 
 # Función para abrir la pantalla de registro de gastos
 def abrir_registro():
-    ventana_principal.destroy()  # Cerrar la ventana principal
-    # Aquí implementarás la pantalla de registro de gastos
+    ventana_principal.destroy()  
 
 # Función para abrir la pantalla de resumen de gastos
 def abrir_resumen():
-    ventana_principal.destroy()  # Cerrar la ventana principal
-    # Aquí implementarás la pantalla de resumen de gastos
+    ventana_principal.destroy()  
 
 # Configuración de la ventana principal
 ventana_principal = tk.Tk()
