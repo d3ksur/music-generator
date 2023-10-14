@@ -65,17 +65,14 @@ def crear_ventana_registro():
 def abrir_resumen():
     ventana_principal.destroy()
 
-# Configuración de la ventana principal
 ventana_principal = tk.Tk()
 ventana_principal.title("Calculadora de Gastos")
 ventana_principal.geometry("500x400")
 ventana_principal.configure(bg="black")
 
-# Crear etiqueta de bienvenida
 etiqueta_bienvenida = tk.Label(ventana_principal, text="Bienvenido a la Calculadora de Gastos", width=400, height=3, bg="gray", font=("Segoe Script", 15), relief=tk.RAISED)
 etiqueta_bienvenida.pack(pady=20)
 
-# Crear botones para registrar gastos y ver resumen con bordes redondos
 
 boton_registrar_gasto = tk.Button(ventana_principal, text="Registrar Gasto ->", compound="center", command=crear_ventana_registro, width=200, height=3, bg="blue", fg="white", font=("Arial", 12), relief=tk.RAISED)
 boton_ver_resumen = tk.Button(ventana_principal, text="Ver Resumen ->", compound="center", command=abrir_resumen, width=200, height=3, bg="blue", fg="white", font=("Arial", 12), relief=tk.RAISED)
@@ -83,5 +80,4 @@ boton_ver_resumen = tk.Button(ventana_principal, text="Ver Resumen ->", compound
 boton_registrar_gasto.pack(pady=30)
 boton_ver_resumen.pack()
 
-# Iniciar la aplicación
 ventana_principal.mainloop()
