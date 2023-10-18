@@ -31,12 +31,14 @@ def crear_ventana_registro():
     monto_label.pack(pady=10)
     monto_entry = tk.Entry(ventana_registro, validate="key", validatecommand=(validation, '%P'))
     monto_entry.pack(pady=5)
-    
+
+    #Funcion que controla que los entries esten completos.
     def check_empty_fields():
         if not nombre_entry.get() or not monto_entry.get():
             return False
         return True
 
+    #Funcion para registrar el gasto en el array de objetos.
     def registrar_gasto():
         if not check_empty_fields():
             messagebox.showerror("Error", "Por favor complete todos los campos.")
@@ -51,7 +53,6 @@ def crear_ventana_registro():
             gastos[nombre] = [monto]
 
         messagebox.showinfo("Gasto registrado", f"Se registró un gasto de {monto} en {nombre}")
-        update_graph()
 
     registrar_button = tk.Button(ventana_registro, text="Registrar", command=registrar_gasto)
     registrar_button.pack(pady=20)
@@ -59,6 +60,7 @@ def crear_ventana_registro():
     if not check_empty_fields():
         registrar_button.config(state="disabled")
 
+    #Funcion que desactiva el boton de regsitrar si los entries no estan completos.
     def on_change(event):
         if check_empty_fields():
             registrar_button.config(state="normal")
@@ -68,6 +70,7 @@ def crear_ventana_registro():
     nombre_entry.bind("<KeyRelease>", on_change)
     monto_entry.bind("<KeyRelease>", on_change)
 
+#Funcion para crear el grafico con los datos guardados.
 def update_graph():
     nombres = list(gastos.keys())
     montos = [sum(gastos[nombre]) for nombre in nombres]
@@ -83,8 +86,9 @@ def update_graph():
 
 # Función para abrir la pantalla de resumen de gastos
 def abrir_resumen():
-    ventana_principal.destroy()
+    update_graph()
 
+#Crear la ventana principal.
 ventana_principal = tk.Tk()
 ventana_principal.title("Calculadora de Gastos")
 ventana_principal.geometry("500x400")
