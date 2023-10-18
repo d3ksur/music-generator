@@ -38,7 +38,7 @@ def crear_ventana_registro():
             return False
         return True
 
-    #Funcion para registrar el gasto en el array de objetos.
+    #Funcion para registrar el gasto en el array de objetos y ademas usa la funcion check_empty_fields.
     def registrar_gasto():
         if not check_empty_fields():
             messagebox.showerror("Error", "Por favor complete todos los campos.")
@@ -93,6 +93,7 @@ ventana_principal = tk.Tk()
 ventana_principal.title("Calculadora de Gastos")
 ventana_principal.geometry("500x400")
 ventana_principal.configure(bg="black")
+ventana_principal.iconbitmap('icons8-calculator-16.ico')
 
 etiqueta_bienvenida = tk.Label(ventana_principal, text="Bienvenido a la Calculadora de Gastos", width=400, height=3, bg="gray", font=("Segoe Script", 15), relief=tk.RAISED)
 etiqueta_bienvenida.pack(pady=20)
