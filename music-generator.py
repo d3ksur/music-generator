@@ -1,5 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
+import matplotlib.pyplot as plt
+
+gastos = {}
 
 # Crear la ventana de registro de gasto
 def crear_ventana_registro():
@@ -40,10 +43,15 @@ def crear_ventana_registro():
             return
 
         nombre = nombre_entry.get()
-        monto = monto_entry.get()
-        # Aquí puedes implementar la lógica para registrar el gasto en tu aplicación
+        monto = float(monto_entry.get())
+
+        if nombre in gastos:
+            gastos[nombre].append(monto)
+        else:
+            gastos[nombre] = [monto]
 
         messagebox.showinfo("Gasto registrado", f"Se registró un gasto de {monto} en {nombre}")
+        update_graph()
 
     registrar_button = tk.Button(ventana_registro, text="Registrar", command=registrar_gasto)
     registrar_button.pack(pady=20)
@@ -60,6 +68,18 @@ def crear_ventana_registro():
     nombre_entry.bind("<KeyRelease>", on_change)
     monto_entry.bind("<KeyRelease>", on_change)
 
+def update_graph():
+    nombres = list(gastos.keys())
+    montos = [sum(gastos[nombre]) for nombre in nombres]
+
+    plt.figure(figsize=(6, 4))
+    plt.bar(nombres, montos, color='skyblue')
+    plt.xlabel('Gastos')
+    plt.ylabel('Monto total')
+    plt.title('Gastos Registrados')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
 
 # Función para abrir la pantalla de resumen de gastos
 def abrir_resumen():
