@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 gastos = {}
 opciones_tipos = ["Alimentación", "Transporte", "Entretenimiento", "Servicios", "Otros"]
+nombre_actual = ""
 
 # Crear la ventana de registro de gasto
 def crear_ventana_registro():
@@ -25,7 +26,6 @@ def crear_ventana_registro():
     tipo_label.pack(pady=10)
 
     # Opciones de clasificación de gastos
-    opciones_tipos = ["Alimentación", "Transporte", "Entretenimiento", "Servicios", "Otros"]
     tipo_variable = tk.StringVar(ventana_registro)
     tipo_variable.set(opciones_tipos[0])  # Valor predeterminado
     tipo_menu = tk.OptionMenu(ventana_registro, tipo_variable, *opciones_tipos)
@@ -57,7 +57,7 @@ def crear_ventana_registro():
         if not check_empty_fields():
             messagebox.showerror("Error", "Por favor complete todos los campos.")
             return
-
+        
         nombre = nombre_entry.get()
         monto = float(monto_entry.get())
         tipo = tipo_variable.get()
@@ -68,7 +68,6 @@ def crear_ventana_registro():
             gastos[nombre] = [(tipo, monto)]
 
         messagebox.showinfo("Gasto registrado", f"Se registró un gasto de {monto} en {nombre} de tipo {tipo}.")
-
 
     registrar_button = tk.Button(ventana_registro, text="Registrar", command=registrar_gasto)
     registrar_button.pack(pady=20)
@@ -112,11 +111,10 @@ def update_graph():
     plt.tight_layout()
     plt.show()
 
-
 # Función para abrir la pantalla de resumen de gastos
 def abrir_resumen():
     update_graph()
-
+        
 #Crear la ventana principal.
 ventana_principal = tk.Tk()
 ventana_principal.title("Calculadora de Gastos")
