@@ -149,7 +149,7 @@ def crear_ventana_detalles():
 #Crear la ventana principal.
 ventana_principal = tk.Tk()
 ventana_principal.title("Calculadora de Gastos")
-ventana_principal.geometry("500x400")
+ventana_principal.geometry("500x600")
 ventana_principal.configure(bg="black")
 # ventana_principal.iconbitmap('icons8-calculator-16.ico')
 
