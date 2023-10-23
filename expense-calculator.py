@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import matplotlib.pyplot as plt
 
+ganancias = {}
 gastos = {}
 opciones_tipos = ["Alimentación", "Transporte", "Entretenimiento", "Servicios", "Otros"]
 nombre_actual = ""
@@ -111,10 +112,40 @@ def update_graph():
     plt.tight_layout()
     plt.show()
 
+def ver_detalles_gasto(nombre_gasto):
+    if nombre_gasto in gastos:
+        detalles = gastos[nombre_gasto]
+        detalles_str = "\n".join([f"Tipo: {tipo}, Monto: {monto}" for tipo, monto in detalles])
+        messagebox.showinfo(f"Detalles de {nombre_gasto}", detalles_str)
+    else:
+        messagebox.showerror("Error", f"No se encontraron detalles para {nombre_gasto}.")
+
 # Función para abrir la pantalla de resumen de gastos
 def abrir_resumen():
     update_graph()
-        
+    
+def crear_ventana_detalles():
+    ventana_detalles = tk.Toplevel(ventana_principal)
+    ventana_detalles.title("Detalles de Gasto")
+    ventana_detalles.geometry("400x300")
+    ventana_detalles.configure(bg="black")
+
+    ventana_detalles_label = tk.Label(ventana_detalles, text="Ver Detalles de Gasto", width=400, height=3, bg="gray", font=("Segoe Script", 15), relief=tk.RAISED)
+    ventana_detalles_label.pack(pady=20)
+
+    nombre_label = tk.Label(ventana_detalles, text="Nombre del gasto:", bg="gray", font=("Segoe Script", 10), relief=tk.RAISED)
+    nombre_label.pack(pady=10)
+
+    nombre_entry = tk.Entry(ventana_detalles)
+    nombre_entry.pack(pady=5)
+
+    def ver_detalles():
+        nombre = nombre_entry.get()
+        ver_detalles_gasto(nombre)
+
+    detalles_button = tk.Button(ventana_detalles, text="Ver Detalles", command=ver_detalles)
+    detalles_button.pack(pady=20)
+    
 #Crear la ventana principal.
 ventana_principal = tk.Tk()
 ventana_principal.title("Calculadora de Gastos")
@@ -131,5 +162,8 @@ boton_ver_resumen = tk.Button(ventana_principal, text="Ver Resumen ->", compound
 
 boton_registrar_gasto.pack(pady=30)
 boton_ver_resumen.pack()
+
+boton_ver_detalles = tk.Button(ventana_principal, text="Ver Detalles de Gasto ->", compound="center", command=crear_ventana_detalles, width=200, height=3, bg="blue", fg="white", font=("Arial", 12), relief=tk.RAISED)
+boton_ver_detalles.pack(pady=30)
 
 ventana_principal.mainloop()
