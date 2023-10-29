@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import matplotlib.pyplot as plt
+from openpyxl import load_workbook
 
 # Diccionarios para almacenar los datos de ganancias y gastos
 ganancias = {}
@@ -62,18 +63,34 @@ def crear_ventana_registro():
         if not check_empty_fields():
             messagebox.showerror("Error", "Por favor complete todos los campos.")
             return
-        
+
         nombre = nombre_entry.get()
         monto = float(monto_entry.get())
         tipo = tipo_variable.get()
 
+        # Actualizar el diccionario de gastos
         if nombre in gastos:
             gastos[nombre].append((tipo, monto))
         else:
             gastos[nombre] = [(tipo, monto)]
 
-        messagebox.showinfo("Gasto registrado", f"Se registró un gasto de {monto} en {nombre} de tipo {tipo}.")
+        # Actualizar el archivo de Excel
+        workbook = load_workbook("expense-calculator-data.xlsx")
+        sheet = workbook["Registros"]
 
+        # Insertar una nueva fila en la hoja de cálculo a partir de la línea 3
+        sheet.insert_rows(3)
+
+        # Agregar los datos a la nueva fila
+        sheet[f"B3"] = nombre
+        sheet[f"C3"] = tipo
+        sheet[f"D3"] = monto
+
+        # Guardar los cambios en el archivo
+        workbook.save("expense-calculator-data.xlsx")
+
+        messagebox.showinfo("Gasto registrado", f"Se registró un gasto de {monto} en {nombre} de tipo {tipo}.")
+    
     registrar_button = tk.Button(ventana_registro, text="Registrar", command=registrar_gasto)
     registrar_button.pack(pady=20)
 
@@ -92,6 +109,22 @@ def crear_ventana_registro():
 
 #Funcion para crear el grafico con los datos guardados.
 def update_graph():
+    workbook = load_workbook("expense-calculator-data.xlsx")
+    sheet = workbook["Registros"]
+
+    # Obtener los datos de los gastos
+    gastos = {}
+    for row in range(3, sheet.max_row + 1):
+        nombre = sheet[f"B{row}"].value
+        tipo = sheet[f"C{row}"].value
+        monto = sheet[f"D{row}"].value
+
+        if nombre in gastos:
+            gastos[nombre].append((tipo, monto))
+        else:
+            gastos[nombre] = [(tipo, monto)]
+
+    # Generar el gráfico
     fig, axs = plt.subplots(1, len(opciones_tipos), figsize=(6 * len(opciones_tipos), 4), squeeze=False)
 
     for i, tipo in enumerate(opciones_tipos):
@@ -115,6 +148,7 @@ def update_graph():
 
     plt.tight_layout()
     plt.show()
+
 
 def ver_detalles_gasto(nombre_gasto):
     if nombre_gasto in gastos:
@@ -149,7 +183,7 @@ def crear_ventana_detalles():
 
     detalles_button = tk.Button(ventana_detalles, text="Ver Detalles", command=ver_detalles)
     detalles_button.pack(pady=20)
-    
+
 #Crear la ventana principal.
 ventana_principal = tk.Tk()
 ventana_principal.title("Calculadora de Gastos")
