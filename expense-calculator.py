@@ -2,8 +2,11 @@ import tkinter as tk
 from tkinter import messagebox
 import matplotlib.pyplot as plt
 
+# Diccionarios para almacenar los datos de ganancias y gastos
 ganancias = {}
 gastos = {}
+
+# Lista de opciones de tipos de gastos
 opciones_tipos = ["Alimentación", "Transporte", "Entretenimiento", "Servicios", "Otros"]
 nombre_actual = ""
 
@@ -32,6 +35,7 @@ def crear_ventana_registro():
     tipo_menu = tk.OptionMenu(ventana_registro, tipo_variable, *opciones_tipos)
     tipo_menu.pack(pady=5)
 
+    # Función para validar la entrada de texto como número
     def validate_input(new_text):
         if not new_text:
             return True
@@ -53,7 +57,7 @@ def crear_ventana_registro():
             return False
         return True
 
-    #Funcion para registrar el gasto en el array de objetos y ademas usa la funcion check_empty_fields.
+    # Función para registrar un gasto en el diccionario de gastos y mostrar un mensaje de éxito
     def registrar_gasto():
         if not check_empty_fields():
             messagebox.showerror("Error", "Por favor complete todos los campos.")
