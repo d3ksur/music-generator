@@ -16,18 +16,18 @@ def crear_ventana_registro():
     ventana_registro = tk.Toplevel(ventana_principal)
     ventana_registro.title("Registrar Nuevo Gasto")
     ventana_registro.geometry("400x500")
-    ventana_registro.configure(bg="black")
+    ventana_registro.configure(bg="#105ba6")
     
-    ventana_registro_label = tk.Label(ventana_registro, text="Registrar gasto", width=400, height=3, bg="gray", font=("Segoe Script", 15), relief=tk.RAISED)
+    ventana_registro_label = tk.Label(ventana_registro, text="Registrar gasto", width=400, height=3, bg="#615dc7", font=("Segoe Script", 15), relief=tk.RAISED)
     ventana_registro_label.pack(pady=20)
 
     # Elementos de la interfaz de usuario para el registro de gastos
-    nombre_label = tk.Label(ventana_registro, text="Nombre del gasto:", bg="gray", font=("Segoe Script", 10), relief=tk.RAISED)
+    nombre_label = tk.Label(ventana_registro, text="Nombre del gasto:", bg="#615dc7", font=("Segoe Script", 10), relief=tk.RAISED)
     nombre_label.pack(pady=10)
     nombre_entry = tk.Entry(ventana_registro)
     nombre_entry.pack(pady=5)
     
-    tipo_label = tk.Label(ventana_registro, text="Tipo de gasto:", bg="gray", font=("Segoe Script", 10), relief=tk.RAISED)
+    tipo_label = tk.Label(ventana_registro, text="Tipo de gasto:", bg="#615dc7", font=("Segoe Script", 10), relief=tk.RAISED)
     tipo_label.pack(pady=10)
 
     # Opciones de clasificación de gastos
@@ -47,7 +47,7 @@ def crear_ventana_registro():
             return False
 
     validation = ventana_registro.register(validate_input)
-    monto_label = tk.Label(ventana_registro, text="Monto del gasto:", bg="gray", font=("Segoe Script", 10), relief=tk.RAISED)
+    monto_label = tk.Label(ventana_registro, text="Monto del gasto:", bg="#615dc7", font=("Segoe Script", 10), relief=tk.RAISED)
     monto_label.pack(pady=10)
     monto_entry = tk.Entry(ventana_registro, validate="key", validatecommand=(validation, '%P'))
     monto_entry.pack(pady=5)
@@ -91,7 +91,7 @@ def crear_ventana_registro():
 
         messagebox.showinfo("Gasto registrado", f"Se registró un gasto de {monto} en {nombre} de tipo {tipo}.")
     
-    registrar_button = tk.Button(ventana_registro, text="Registrar", command=registrar_gasto)
+    registrar_button = tk.Button(ventana_registro, text="Registrar", command=registrar_gasto, bg="#485ebe")
     registrar_button.pack(pady=20)
 
     if not check_empty_fields():
@@ -166,12 +166,12 @@ def crear_ventana_detalles():
     ventana_detalles = tk.Toplevel(ventana_principal)
     ventana_detalles.title("Detalles de Gasto")
     ventana_detalles.geometry("400x300")
-    ventana_detalles.configure(bg="black")
+    ventana_detalles.configure(bg="#105ba6")
 
-    ventana_detalles_label = tk.Label(ventana_detalles, text="Ver Detalles de Gasto", width=400, height=3, bg="gray", font=("Segoe Script", 15), relief=tk.RAISED)
+    ventana_detalles_label = tk.Label(ventana_detalles, text="Ver Detalles de Gasto", width=400, height=3, bg="#615dc7", font=("Segoe Script", 15), relief=tk.RAISED)
     ventana_detalles_label.pack(pady=20)
 
-    nombre_label = tk.Label(ventana_detalles, text="Nombre del gasto:", bg="gray", font=("Segoe Script", 10), relief=tk.RAISED)
+    nombre_label = tk.Label(ventana_detalles, text="Nombre del gasto:", bg="#615dc7", font=("Segoe Script", 10), relief=tk.RAISED)
     nombre_label.pack(pady=10)
 
     nombre_entry = tk.Entry(ventana_detalles)
@@ -181,27 +181,30 @@ def crear_ventana_detalles():
         nombre = nombre_entry.get()
         ver_detalles_gasto(nombre)
 
-    detalles_button = tk.Button(ventana_detalles, text="Ver Detalles", command=ver_detalles)
+    detalles_button = tk.Button(ventana_detalles, text="Ver Detalles", command=ver_detalles, bg="#485ebe")
     detalles_button.pack(pady=20)
+
+def cerrar_ventana():
+    ventana_principal.destroy()
 
 #Crear la ventana principal.
 ventana_principal = tk.Tk()
 ventana_principal.title("Calculadora de Gastos")
-ventana_principal.geometry("500x600")
-ventana_principal.configure(bg="black")
-# ventana_principal.iconbitmap('icons8-calculator-16.ico')
+ventana_principal.configure(bg="#105ba6")
+ventana_principal.attributes('-fullscreen', True)
 
-etiqueta_bienvenida = tk.Label(ventana_principal, text="Bienvenido a la Calculadora de Gastos", width=400, height=3, bg="gray", font=("Segoe Script", 15), relief=tk.RAISED)
+# ventana_principal.iconbitmap('icons8-calculator-16.ico')
+etiqueta_bienvenida = tk.Label(ventana_principal, text="Bienvenido a la Calculadora de Gastos", width=400, height=3, bg="#615dc7", font=("Segoe Script", 15), relief=tk.RAISED)
 etiqueta_bienvenida.pack(pady=20)
 
-
-boton_registrar_gasto = tk.Button(ventana_principal, text="Registrar Gasto ->", compound="center", command=crear_ventana_registro, width=200, height=3, bg="blue", fg="white", font=("Arial", 12), relief=tk.RAISED)
-boton_ver_resumen = tk.Button(ventana_principal, text="Ver Resumen ->", compound="center", command=abrir_resumen, width=200, height=3, bg="blue", fg="white", font=("Arial", 12), relief=tk.RAISED)
+boton_registrar_gasto = tk.Button(ventana_principal, text="Registrar Gasto ->", compound="center", command=crear_ventana_registro, width=200, height=3, bg="#485ebe", fg="white", font=("Arial", 12), relief=tk.RAISED)
+boton_ver_resumen = tk.Button(ventana_principal, text="Ver Resumen ->", compound="center", command=abrir_resumen, width=200, height=3, bg="#485ebe", fg="white", font=("Arial", 12), relief=tk.RAISED)
+boton_ver_detalles = tk.Button(ventana_principal, text="Ver Detalles de Gasto ->", compound="center", command=crear_ventana_detalles, width=200, height=3, bg="#485ebe", fg="white", font=("Arial", 12), relief=tk.RAISED)
+boton_cerrar_pantalla = tk.Button(ventana_principal, text="Cerrar programa", compound="center", command=cerrar_ventana, width=200, height=3, bg="#485ebe", fg="white", font=("Arial", 12), relief=tk.RAISED)
 
 boton_registrar_gasto.pack(pady=30)
 boton_ver_resumen.pack()
-
-boton_ver_detalles = tk.Button(ventana_principal, text="Ver Detalles de Gasto ->", compound="center", command=crear_ventana_detalles, width=200, height=3, bg="blue", fg="white", font=("Arial", 12), relief=tk.RAISED)
 boton_ver_detalles.pack(pady=30)
+boton_cerrar_pantalla.pack(padx=20)
 
 ventana_principal.mainloop()
